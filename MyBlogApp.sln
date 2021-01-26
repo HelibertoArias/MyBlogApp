@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlogApp.Tests", "MyBlogApp.Tests\MyBlogApp.Tests.csproj", "{868120C6-1DF9-496A-A140-7B0FAF02A0C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlogApp.Core.Tests", "MyBlogApp.Core.Tests\MyBlogApp.Core.Tests.csproj", "{40AC7B58-ED21-4B33-A834-40C60C130CE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlogApp.Core", "MyBlogApp.Core\MyBlogApp.Core.csproj", "{2F53C3F4-C112-4F3D-BFBD-A25CE37A96E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlogApp.Infraestructure", "MyBlogApp.Infraestructure\MyBlogApp.Infraestructure.csproj", "{E0014F24-E5D7-448E-A45B-1A557E7BF8DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlogApp.Api", "MyBlogApp.Api\MyBlogApp.Api.csproj", "{332854D3-AD19-4259-A32D-05F6A373F3E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BABEAFF4-E890-47FD-9ACD-9D732B5AA8D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlogApp.Web", "MyBlogApp.Web\MyBlogApp.Web.csproj", "{CF6E27E2-1568-4073-83E5-F2612C2F11D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C99885FC-9B04-4A89-8E9D-3CEAF452D88A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +23,33 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{868120C6-1DF9-496A-A140-7B0FAF02A0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{868120C6-1DF9-496A-A140-7B0FAF02A0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{868120C6-1DF9-496A-A140-7B0FAF02A0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{868120C6-1DF9-496A-A140-7B0FAF02A0C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40AC7B58-ED21-4B33-A834-40C60C130CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40AC7B58-ED21-4B33-A834-40C60C130CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40AC7B58-ED21-4B33-A834-40C60C130CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40AC7B58-ED21-4B33-A834-40C60C130CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F53C3F4-C112-4F3D-BFBD-A25CE37A96E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F53C3F4-C112-4F3D-BFBD-A25CE37A96E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F53C3F4-C112-4F3D-BFBD-A25CE37A96E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F53C3F4-C112-4F3D-BFBD-A25CE37A96E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0014F24-E5D7-448E-A45B-1A557E7BF8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0014F24-E5D7-448E-A45B-1A557E7BF8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0014F24-E5D7-448E-A45B-1A557E7BF8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0014F24-E5D7-448E-A45B-1A557E7BF8DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{332854D3-AD19-4259-A32D-05F6A373F3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{332854D3-AD19-4259-A32D-05F6A373F3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{332854D3-AD19-4259-A32D-05F6A373F3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{332854D3-AD19-4259-A32D-05F6A373F3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF6E27E2-1568-4073-83E5-F2612C2F11D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF6E27E2-1568-4073-83E5-F2612C2F11D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF6E27E2-1568-4073-83E5-F2612C2F11D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF6E27E2-1568-4073-83E5-F2612C2F11D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40AC7B58-ED21-4B33-A834-40C60C130CE2} = {BABEAFF4-E890-47FD-9ACD-9D732B5AA8D0}
+		{CF6E27E2-1568-4073-83E5-F2612C2F11D2} = {C99885FC-9B04-4A89-8E9D-3CEAF452D88A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD591016-45F7-417B-8175-316045CCE356}
