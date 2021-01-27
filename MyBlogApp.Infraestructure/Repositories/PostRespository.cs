@@ -65,11 +65,29 @@ namespace MyBlogApp.Infraestructure.Repositories
         /// get the post by status.
         /// </summary>
         /// <param name="postStatus">the post status.</param>
+        /// <param name="userId">the user id.</param>
         /// <returns>a Task<ICollection<Post>> containing the get post by status.</returns>
-        public async Task<ICollection<Post>> GetPostByStatus(PostStatus postStatus)
+        public async Task<ICollection<Post>> GetPostByStatus(MyBlogApp.Core.Enums.PostStatus postStatus, ulong userId)
         {
             return await dbContext.Posts
-                            .Where(x => x.PostStatusId == postStatus.PostStatusId)
+                            .Where(x => x.PostStatusId == (ulong)postStatus && x.AutorId == userId)
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// get the posts draf or rejecteds by autor id.
+        /// </summary>
+        /// <param name="userId">the user id.</param>
+        /// <returns>a Task<ICollection<Post>> containing the get posts draf or rejecteds by autor id.</returns>
+        public async Task<ICollection<Post>> GetPostsDrafOrRejectedsByAutorId(ulong userId)
+        {
+            return await dbContext.Posts
+                            .Include(x=>x.Autor)
+                            .Include(x=>x.PostStatus)
+                            .Where(x => (x.PostStatusId == (ulong)Core.Enums.PostStatus.Approved 
+                                                || x.PostStatusId == (ulong)Core.Enums.PostStatus.Draf
+                                          ) && x.AutorId == userId)
                             .ToListAsync()
                             .ConfigureAwait(false);
         }

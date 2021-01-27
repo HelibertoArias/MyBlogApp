@@ -1,8 +1,9 @@
-﻿namespace MyBlogApp.Infraestructure.Requests
+﻿namespace MyBlogApp.Infraestructure.Models
+
 {/// <summary>
  /// user login request.
  /// </summary>
-    public class UserLoginRequest
+    public class UserLogin
     {
         /// <summary>
         /// Gets or sets the user name.

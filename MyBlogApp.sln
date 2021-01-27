@@ -13,9 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlogApp.Api", "MyBlogApp.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BABEAFF4-E890-47FD-9ACD-9D732B5AA8D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlogApp.Web", "MyBlogApp.Web\MyBlogApp.Web.csproj", "{CF6E27E2-1568-4073-83E5-F2612C2F11D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlogApp.Web", "MyBlogApp.Web\MyBlogApp.Web.csproj", "{CF6E27E2-1568-4073-83E5-F2612C2F11D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C99885FC-9B04-4A89-8E9D-3CEAF452D88A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D2163F3-F760-4C2C-A17E-E923077215EE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

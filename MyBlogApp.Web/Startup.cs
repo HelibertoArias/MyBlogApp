@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyBlogApp.Core.Respositories;
 using MyBlogApp.Infraestructure;
+using MyBlogApp.Infraestructure.Mappers;
 using MyBlogApp.Infraestructure.Repositories;
 using MyBlogApp.Infraestructure.Services;
 
@@ -26,6 +28,8 @@ namespace MyBlogApp.Web
             services.AddControllersWithViews();
 
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAutoMapper(typeof(AutoMapperProfiles));
 
             services.AddTransient<UserService>();
             services.AddTransient<PostService>();

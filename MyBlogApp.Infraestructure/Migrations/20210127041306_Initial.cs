@@ -2,7 +2,7 @@
 
 namespace MyBlogApp.Infraestructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,6 +39,7 @@ namespace MyBlogApp.Infraestructure.Migrations
                     UserId = table.Column<ulong>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Username = table.Column<string>(type: "TEXT", nullable: true),
+                    Password = table.Column<string>(type: "varchar(200)", nullable: false),
                     RoleId = table.Column<ulong>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

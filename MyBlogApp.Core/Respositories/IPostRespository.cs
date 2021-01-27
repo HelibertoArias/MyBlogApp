@@ -7,7 +7,7 @@ namespace MyBlogApp.Core.Respositories
     public interface IPostRespository
     {
 
-        Task<ICollection<Post>> GetPostByStatus(PostStatus postStatus);
+        Task<ICollection<Post>> GetPostsDrafOrRejectedsByAutorId(ulong userId);
 
         Task CreatePost(Post post);
 

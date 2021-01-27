@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyBlogApp.Infraestructure.Requests;
+using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Services;
 
 namespace MyBlogApp.Web.Controllers
@@ -42,19 +42,30 @@ namespace MyBlogApp.Web.Controllers
         /// <param name="request">the user login request.</param>
         /// <returns>the action result.</returns>
         [HttpPost]
-        public IActionResult Login(UserLoginRequest request)
+        public IActionResult Login(UserLogin request)
         {
             if (string.IsNullOrEmpty(request.Username))
             {
                 ViewBag.Message = "Username is required";
+                return View(request);
             }
 
             if (string.IsNullOrEmpty(request.Password))
             {
                 ViewBag.Message = "Password is required";
+                return View(request);
             }
 
-            return View(request);
+            var userLogin = _userService.Login(request);
+
+            //if(userLogin == null)
+            //{
+            //    ViewBag.Message = "Sorry, we don't recognize this user. Try again.";
+            //    return View(request);
+            //}
+
+
+            return RedirectToAction("Index", "Post", new { userId = 1 });
         }
     }
 }

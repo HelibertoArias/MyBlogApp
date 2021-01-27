@@ -8,8 +8,8 @@ using MyBlogApp.Infraestructure;
 namespace MyBlogApp.Infraestructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210126030654_Init")]
-    partial class Init
+    [Migration("20210127041306_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,6 +104,10 @@ namespace MyBlogApp.Infraestructure.Migrations
                     b.Property<ulong>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
 
                     b.Property<ulong>("RoleId")
                         .HasColumnType("INTEGER");

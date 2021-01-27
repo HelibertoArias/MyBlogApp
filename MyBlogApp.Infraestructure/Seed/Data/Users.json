@@ -1,13 +1,56 @@
 [
   {
+    "UserId": 1,
     "Username": "Jane",
     "Password": "jj",
     "Role": {
       "Name": "Writer"
-    }
-     
+    },
+    "Posts": [
+      {
+        "Title": "Hello world",
+        "Content": "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+        "PostStatus": {
+          "PostStatusId": 4,
+          "Name": "Approved"
+        },
+        "Comments": [
+          {
+            "Content": "Thank for this post bro",
+            "Username": "UserComment01",
+            "Email": "UserComment01@mail.com"
+          }
+        ]
+      },
+      {
+        "Title": "Angular is the best front end framework",
+        "Content": "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "PostStatus": {
+          "PostStatusId": 3,
+          "Name": "Rejected"
+        }
+      },
+      {
+        "Title": "Another post!",
+        "Content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "PostStatus": {
+          "PostStatusId": 1,
+          "Name": "Draf"
+        }
+      },
+      {
+        "Title": "My new post!",
+        "Content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "PostStatus": {
+          "PostStatusId": 2,
+          "Name": "For Approve"
+        }
+      }
+    ]
+
   },
   {
+    "UserId": 2,
     "Username": "John",
     "Password": "jj",
     "Role": {

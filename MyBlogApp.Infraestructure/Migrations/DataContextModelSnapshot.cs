@@ -103,6 +103,10 @@ namespace MyBlogApp.Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
                     b.Property<ulong>("RoleId")
                         .HasColumnType("INTEGER");
 

@@ -27,23 +27,6 @@ namespace MyBlogApp.Infraestructure.Seed
 
             }
         }
-
-
-        public static void AddRoles(DataContext context)
-        {
-            if (!context.Users.Any())
-            {
-                var rolesData = File.ReadAllText("Seed/Data/Roles.json");
-                var roles = System.Text.Json.JsonSerializer.Deserialize<ICollection<Role>>(rolesData);
-
-                foreach (var role in roles)
-                {
-                    context.Roles.Add(role);
-                }
-
-                context.SaveChanges();
-
-            }
-        }
+ 
     }
 }

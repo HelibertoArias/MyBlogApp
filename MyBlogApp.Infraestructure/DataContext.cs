@@ -41,7 +41,8 @@ namespace MyBlogApp.Infraestructure
             modelBuilder.Entity<User>()
                 .HasKey(x => x.UserId);
 
-           
+            modelBuilder.Entity<User>().Property(x => x.Password).IsRequired().HasColumnType("varchar(200)");
+
 
 
 

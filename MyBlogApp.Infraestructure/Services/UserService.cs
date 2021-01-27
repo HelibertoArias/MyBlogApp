@@ -1,5 +1,6 @@
-﻿using MyBlogApp.Core.Respositories;
-using MyBlogApp.Infraestructure.Requests;
+﻿using AutoMapper;
+using MyBlogApp.Core.Respositories;
+using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Responses;
 using System;
 
@@ -18,13 +19,20 @@ namespace MyBlogApp.Infraestructure.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
+        /// <param name="mapper">the mapper.</param>
         /// <param name="userRepostory">the user repository.</param>
-        public UserService(IUserRepository userRepostory)
+        public UserService(IMapper mapper, 
+                            IUserRepository userRepostory)
         {
             _userRepository = userRepostory;
         }
 
-        public UserLoginResponse Login(UserLoginRequest loginRequest)
+        /// <summary>
+        /// login the login request.
+        /// </summary>
+        /// <param name="loginRequest">the user login.</param>
+        /// <returns>the user login response.</returns>
+        public UserLoginResponse Login(UserLogin loginRequest)
         {
             if (loginRequest == null)
             {
@@ -33,12 +41,12 @@ namespace MyBlogApp.Infraestructure.Services
 
             var user = _userRepository.Login(loginRequest.Username, loginRequest.Password);
 
-            if (user != null)
+            if (user == null)
             {
-                return new UserLoginResponse { RoleName = user.Role.Name, Id = user.UserId, Username = user.Username };
+                return null;
             }
 
-            return null;
+            return new UserLoginResponse { RoleName = user.Role.Name, Id = user.UserId, Username = user.Username };
         }
     }
 }

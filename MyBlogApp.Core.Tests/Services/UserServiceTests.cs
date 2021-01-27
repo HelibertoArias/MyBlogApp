@@ -1,7 +1,7 @@
 ﻿using Moq;
 using MyBlogApp.Core.Entities;
 using MyBlogApp.Core.Respositories;
-using MyBlogApp.Infraestructure.Requests;
+using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Services;
 using Xunit;
 
@@ -13,18 +13,18 @@ namespace MyBlogApp.Core.Tests.Service
         [Fact]
         public void ShouldThrowArgumentNullException()
         {
-            UserLoginRequest loginRequest = null ;
+            UserLogin loginRequest = null;
 
             var userRepository = new Mock<IUserRepository>();
-            var userService = new UserService(userRepository.Object);            
+            var userService = new UserService(userRepository.Object);
 
-            Assert.Throws<System.ArgumentNullException>( ()=> userService.Login(loginRequest));             
+            Assert.Throws<System.ArgumentNullException>(() => userService.Login(loginRequest));
         }
 
         [Fact]
         public void ShouldNullWhenUserDoesNotExist()
         {
-            var loginRequest = new UserLoginRequest { Username = "JanenotExist", Password = "pass" };
+            var loginRequest = new UserLogin { Username = "JanenotExist", Password = "pass" };
 
 
 

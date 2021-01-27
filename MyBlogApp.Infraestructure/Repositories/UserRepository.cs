@@ -34,7 +34,7 @@ namespace MyBlogApp.Infraestructure.Repositories
         public User Login(string username, string password)
         {
             var results = dbContext.Users
-                            .Where(x => x.Username.Equals(username, StringComparison.OrdinalIgnoreCase)
+                            .Where(x => x.Username.ToLower().Equals(username.ToLower())
                                         && x.Password.Equals(password));
 
             return (results.Any()) ? results.First() : null;
