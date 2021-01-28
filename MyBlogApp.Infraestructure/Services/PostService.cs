@@ -40,15 +40,59 @@ namespace MyBlogApp.Infraestructure.Services
         /// <param name="autorId">the autor id.</param>
         /// <returns>a IEnumerable<PostList> containing the get posts draf and rejecteds by user.</returns>
 
-        public async Task<IEnumerable<PostList>> GetPostsDrafOrRejectedsByAutorId(ulong autorId)
+        public async Task<IEnumerable<PostItemModel>> GetPostsDrafOrRejectedsByAutorId(ulong autorId)
         {
             var posts = await _postRepository.GetPostsDrafOrRejectedsByAutorId(autorId)
                                              .ConfigureAwait(false);
 
 
-            var response = _mapper.Map<ICollection<Post>, ICollection<PostList>>(posts);
+            var response = _mapper.Map<ICollection<Post>, ICollection<PostItemModel>>(posts);
 
             return response;
         }
+
+        /// <summary>
+        /// find the post id.
+        /// </summary>
+        /// <param name="postId">the post id.</param>
+        /// <returns>a Task<PostModel> containing the post id.</returns>
+        public async Task<PostEditAddModel> Find(ulong postId)
+        {
+            var post = await _postRepository.Find(postId).ConfigureAwait(false);
+            if (post == null)
+            {
+                return null;
+            }
+
+            var response = _mapper.Map<Post, PostEditAddModel>(post);
+            return response;
+
+        }
+
+        /// <summary>
+        /// get the post status.
+        /// </summary>
+        /// <returns>a Task<IEnumerable<PostStatusModel>> containing the get post status.</returns>
+        public async Task<IEnumerable<PostStatusModel>> GetPostStatus()
+        {
+            var postsStatus = await _postRepository.GetPostStatus().ConfigureAwait(false);
+            if (postsStatus == null)
+            {
+                return null;
+            }
+
+            var response = _mapper.Map<IEnumerable<PostStatus>, IEnumerable<PostStatusModel>>(postsStatus);
+            return response;
+
+        }
+
+        public  void UpdatePost(PostEditAddModel model)
+        {
+            var entity = _mapper.Map<PostEditAddModel, Post>(model);
+            _postRepository.UpdatePost(entity);
+            
+        }
+
+
     }
 }

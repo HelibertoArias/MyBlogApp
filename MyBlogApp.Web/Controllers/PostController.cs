@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,14 +35,19 @@ namespace MyBlogApp.Web.Controllers
         /// <returns>the action result.</returns>
         public async Task<ActionResult> Index(ulong userId)
         {
-            IEnumerable<PostList> postList;
+            IEnumerable<PostItemModel> postList;
 
             postList = await _postService.GetPostsDrafOrRejectedsByAutorId(autorId: userId)
                             .ConfigureAwait(false);
 
 
+            var postListModel = new PostListModel
+            {
+                AutorId = userId,
+                Items = postList
+            };
 
-            return View(postList);
+            return View(postListModel);
         }
 
         // GET: PostController/Details/5
@@ -50,16 +56,26 @@ namespace MyBlogApp.Web.Controllers
             return View();
         }
 
-        // GET: PostController/Create
-        public ActionResult Create()
+        /// <summary>
+        /// create the user id.
+        /// </summary>
+        /// <param name="userId">the user id.</param>
+        /// <returns>a Task<IActionResult> containing the user id.</returns>
+        public async Task<IActionResult> Create(ulong userId)
         {
-            return View();
+            var postModel = new PostEditAddModel
+            {
+                AutorId = userId,
+                PostsStatusOptions = (List<PostStatusModel>)await _postService.GetPostStatus()
+            };
+
+            return View(postModel);
         }
 
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PostEditAddModel model)
         {
             try
             {
@@ -71,41 +87,47 @@ namespace MyBlogApp.Web.Controllers
             }
         }
 
-        // GET: PostController/Edit/5
-        public ActionResult Edit(int id)
+        /// <summary>
+        /// edit the id.
+        /// </summary>
+        /// <param name="id">the id.</param>
+        /// <returns>the action result.</returns>
+        public async Task<IActionResult> Edit(ulong id)
         {
-            return View();
+            var postModel = await _postService.Find(id).ConfigureAwait(false);
+            postModel.PostsStatusOptions = (List<PostStatusModel>)await _postService.GetPostStatus();
+            return View(postModel);
         }
 
         // POST: PostController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(ulong id, PostEditAddModel model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                _postService.UpdatePost(model);
+
+                return RedirectToAction(nameof(Index), new { userId = model.AutorId });
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                model.PostsStatusOptions = (List<PostStatusModel>)await _postService.GetPostStatus();
+                return View(model);
             }
         }
 
-        // GET: PostController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+ 
 
         // POST: PostController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, PostEditAddModel model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { userId = model.AutorId });
             }
             catch
             {

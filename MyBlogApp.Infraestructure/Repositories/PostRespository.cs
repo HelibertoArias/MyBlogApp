@@ -57,6 +57,7 @@ namespace MyBlogApp.Infraestructure.Repositories
         public async Task<Post> Find(ulong postId)
         {
             return await dbContext.Posts
+                            
                             .FindAsync(postId)
                             .ConfigureAwait(false);
         }
@@ -70,6 +71,7 @@ namespace MyBlogApp.Infraestructure.Repositories
         public async Task<ICollection<Post>> GetPostByStatus(MyBlogApp.Core.Enums.PostStatus postStatus, ulong userId)
         {
             return await dbContext.Posts
+                            .AsNoTracking()
                             .Where(x => x.PostStatusId == (ulong)postStatus && x.AutorId == userId)
                             .ToListAsync()
                             .ConfigureAwait(false);
@@ -100,6 +102,22 @@ namespace MyBlogApp.Infraestructure.Repositories
         {
             dbContext.Posts
                 .Update(post);
+
+            // TODO : UnitOfWork here!!
+            dbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// get the post status.
+        /// </summary>
+        /// <returns>a Task<IEnumerable<PostStatus>> containing the get post status.</returns>
+        public async Task<IEnumerable<PostStatus>> GetPostStatus()
+        {
+           var postsStatus =await dbContext.PostsStatus
+                                .ToListAsync()
+                                .ConfigureAwait(false);
+
+            return postsStatus;
         }
 
 

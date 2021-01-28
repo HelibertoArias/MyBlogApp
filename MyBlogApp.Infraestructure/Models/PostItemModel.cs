@@ -1,9 +1,9 @@
 ﻿namespace MyBlogApp.Infraestructure.Models
 {
     /// <summary>
-    /// post list.
+    /// post item model.
     /// </summary>
-    public class PostList
+    public class PostItemModel
     {
         /// <summary>
         /// Gets or sets the post id.
@@ -23,7 +23,7 @@
         /// <summary>
         /// Gets or sets the autor name.
         /// </summary>
-        
+
         public string AutorName { get; set; }
 
         /// <summary>

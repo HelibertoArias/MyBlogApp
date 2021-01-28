@@ -16,5 +16,7 @@ namespace MyBlogApp.Core.Respositories
         void DeletePost(Post post);
 
         Task<Post> Find(ulong postId);
+
+        Task<IEnumerable<PostStatus>> GetPostStatus();
     }
 }

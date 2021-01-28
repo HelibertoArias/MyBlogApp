@@ -14,7 +14,7 @@ namespace MyBlogApp.Infraestructure.Mappers
         /// </summary>
         public AutoMapperProfiles()
         {
-            CreateMap<Post, PostList>()
+            CreateMap<Post, PostItemModel>()
                 .ForMember(dest => dest.AutorName, opt =>
                 {
                     opt.MapFrom(src => src.Autor.Username);
@@ -23,6 +23,13 @@ namespace MyBlogApp.Infraestructure.Mappers
                 {
                     opt.MapFrom(src => src.PostStatus.Name);
                 });
+
+            CreateMap<Post, PostEditAddModel>().ReverseMap();
+
+            CreateMap<PostStatus, PostStatusModel>();
+
+            
+                
         }
     }
 }

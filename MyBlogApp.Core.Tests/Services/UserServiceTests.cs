@@ -16,7 +16,7 @@ namespace MyBlogApp.Core.Tests.Service
             UserLogin loginRequest = null;
 
             var userRepository = new Mock<IUserRepository>();
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(null, userRepository.Object);
 
             Assert.Throws<System.ArgumentNullException>(() => userService.Login(loginRequest));
         }
@@ -33,7 +33,7 @@ namespace MyBlogApp.Core.Tests.Service
                 .Setup(x => x.Login(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((User)null);
 
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(null, userRepository.Object);
 
             var loginResult = userService.Login(loginRequest);
 
