@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MyBlogApp.Core.Entities;
 using MyBlogApp.Infraestructure.Models;
+using MyBlogApp.Infraestructure.Responses;
 
 namespace MyBlogApp.Infraestructure.Mappers
 {
@@ -26,10 +27,22 @@ namespace MyBlogApp.Infraestructure.Mappers
 
             CreateMap<Post, PostEditAddModel>().ReverseMap();
 
-            CreateMap<PostStatus, PostStatusModel>();
+ 
 
-            
-                
+            CreateMap<PostStatus, PostStatusModel>().ReverseMap();
+
+
+            CreateMap<User, UserLoginResponse>()
+             .ForMember(dest => dest.RoleName, opt =>
+              {
+                  opt.MapFrom(src => src.Role.Name);
+              }).ForMember(dest => dest.Id, opt =>
+              {
+                  opt.MapFrom(src => src.UserId);
+              });
+
+
+
         }
     }
 }

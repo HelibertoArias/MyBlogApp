@@ -51,6 +51,18 @@ namespace MyBlogApp.Infraestructure.Services
             return response;
         }
 
+        public async Task<IEnumerable<PostItemModel>> GetPostsToApprove()
+        {
+            var posts = await _postRepository.GetPostsToApprove()
+                                             .ConfigureAwait(false);
+
+
+            var response = _mapper.Map<ICollection<Post>, ICollection<PostItemModel>>(posts);
+
+            return response;
+        }
+        
+
         /// <summary>
         /// find the post id.
         /// </summary>
@@ -86,13 +98,44 @@ namespace MyBlogApp.Infraestructure.Services
 
         }
 
-        public  void UpdatePost(PostEditAddModel model)
+        /// <summary>
+        /// update the post.
+        /// </summary>
+        /// <param name="model">the post edit add model.</param>
+        /// <returns>the task.</returns>
+        public  async Task UpdatePost(PostEditAddModel model)
         {
             var entity = _mapper.Map<PostEditAddModel, Post>(model);
-            _postRepository.UpdatePost(entity);
+            await _postRepository.UpdatePost(entity);
             
         }
 
+        /// <summary>
+        /// update the post status.
+        /// </summary>
+        /// <param name="model">the post edit add model.</param>
+        /// <param name="postStatusModel">the post status model.</param>
+        /// <returns>the task.</returns>
+        public async Task UpdatePostStatus(PostEditAddModel model, PostStatusModel postStatusModel)
+        {
+            var entity = _mapper.Map<PostEditAddModel, Post>(model);
+            entity.PostStatusId = postStatusModel.PostStatusId;
+
+            await _postRepository.UpdatePost(entity);
+
+        }
+
+        /// <summary>
+        /// create the post.
+        /// </summary>
+        /// <param name="model">the post edit add model.</param>
+        /// <returns>the task.</returns>
+        public async Task CreatePost(PostEditAddModel model)
+        {
+            var entity = _mapper.Map<PostEditAddModel, Post>(model);
+            await _postRepository.CreatePost(entity).ConfigureAwait(false);
+
+        }
 
     }
 }

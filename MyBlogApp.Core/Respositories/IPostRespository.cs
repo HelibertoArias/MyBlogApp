@@ -11,12 +11,14 @@ namespace MyBlogApp.Core.Respositories
 
         Task CreatePost(Post post);
 
-        void UpdatePost(Post post);
+        Task UpdatePost(Post post);
 
         void DeletePost(Post post);
 
         Task<Post> Find(ulong postId);
 
         Task<IEnumerable<PostStatus>> GetPostStatus();
+
+        Task<ICollection<Post>> GetPostsToApprove();
     }
 }

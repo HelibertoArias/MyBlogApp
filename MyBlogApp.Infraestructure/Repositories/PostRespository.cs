@@ -37,6 +37,9 @@ namespace MyBlogApp.Infraestructure.Repositories
             await dbContext.Posts
                 .AddAsync(post)
                 .ConfigureAwait(false);
+
+            // TODO : UnitOfWork here!!
+           await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -57,8 +60,8 @@ namespace MyBlogApp.Infraestructure.Repositories
         public async Task<Post> Find(ulong postId)
         {
             return await dbContext.Posts
-                            
-                            .FindAsync(postId)
+                            .Include(x => x.Autor)
+                            .FirstAsync(x=>x.PostId == postId)
                             .ConfigureAwait(false);
         }
 
@@ -87,9 +90,19 @@ namespace MyBlogApp.Infraestructure.Repositories
             return await dbContext.Posts
                             .Include(x=>x.Autor)
                             .Include(x=>x.PostStatus)
-                            .Where(x => (x.PostStatusId == (ulong)Core.Enums.PostStatus.Approved 
-                                                || x.PostStatusId == (ulong)Core.Enums.PostStatus.Draf
+                            .Where(x => (x.PostStatusId  != (ulong)Core.Enums.PostStatus.ForApprove
+                                                || x.PostStatusId == (ulong)Core.Enums.PostStatus.Approved
                                           ) && x.AutorId == userId)
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+        }
+
+        public async Task<ICollection<Post>> GetPostsToApprove()
+        {
+            return await dbContext.Posts
+                            .Include(x => x.Autor)
+                            .Include(x => x.PostStatus)
+                            .Where(x => (x.PostStatusId == (ulong)Core.Enums.PostStatus.ForApprove)  )
                             .ToListAsync()
                             .ConfigureAwait(false);
         }
@@ -98,13 +111,14 @@ namespace MyBlogApp.Infraestructure.Repositories
         /// update the post.
         /// </summary>
         /// <param name="post">the post.</param>
-        public void UpdatePost(Post post)
+        public async Task UpdatePost(Post post)
         {
             dbContext.Posts
                 .Update(post);
 
             // TODO : UnitOfWork here!!
-            dbContext.SaveChanges();
+             await dbContext.SaveChangesAsync().ConfigureAwait(false);
+
         }
 
         /// <summary>

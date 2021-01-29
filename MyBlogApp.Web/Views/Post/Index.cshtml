@@ -47,12 +47,10 @@
                     @Html.DisplayFor(modelItem => item.PostStatusName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |
-                    <form asp-action="Delete" asp-route="">
-                        <input asp-for="AutorId" type="hidden" />
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.PostId })*@
-                        <button type="submit" value="Delete">Delete</button>
-                    </form>
+                    @*@if (Model.CanDeletePost)
+                    {*@
+                        @Html.ActionLink("Edit", "Edit", new { id = item.PostId, roleId = item.RoleId })
+                    @*  *@}
                 </td>
             </tr>
         }

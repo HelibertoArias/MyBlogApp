@@ -15,5 +15,7 @@ namespace MyBlogApp.Infraestructure.Models
         public ulong PostStatusId { get; set; }
 
         public List<PostStatusModel> PostsStatusOptions { get; set; }
+
+        public ulong RoleId { get; set; }
     }
 }

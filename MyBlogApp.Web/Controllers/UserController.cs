@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Services;
 
@@ -56,16 +57,20 @@ namespace MyBlogApp.Web.Controllers
                 return View(request);
             }
 
-            var userLogin = _userService.Login(request);
-
-            //if(userLogin == null)
-            //{
-            //    ViewBag.Message = "Sorry, we don't recognize this user. Try again.";
-            //    return View(request);
-            //}
+            try
+            {
+                var userLogin = _userService.Login(request);
 
 
-            return RedirectToAction("Index", "Post", new { userId = 1 });
+                HttpContext.Session.SetInt32("RoleId",(int) userLogin.RoleId);
+                return RedirectToAction("Index", "Post", new { userId = userLogin.Id });
+            }
+            catch (System.Exception)
+            {
+                ViewBag.Message = "Invalid parametes";
+                return View();
+                
+            }
         }
     }
 }

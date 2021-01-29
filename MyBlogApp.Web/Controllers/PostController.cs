@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyBlogApp.Core.Enums;
 using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Services;
 using System;
@@ -33,39 +34,57 @@ namespace MyBlogApp.Web.Controllers
         /// </summary>
         /// <param name="userId">the user id.</param>
         /// <returns>the action result.</returns>
+    
         public async Task<ActionResult> Index(ulong userId)
         {
             IEnumerable<PostItemModel> postList;
 
-            postList = await _postService.GetPostsDrafOrRejectedsByAutorId(autorId: userId)
+            var roleId = (ulong)HttpContext.Session.GetInt32("RoleId");
+
+            var canDeletePost = false;
+            if(roleId == (ulong)RoleEnum.Writer)
+            {
+                postList = await _postService.GetPostsDrafOrRejectedsByAutorId(autorId: userId)
                             .ConfigureAwait(false);
+            }
+            else
+            {
+
+                postList = await _postService.GetPostsToApprove()
+                           .ConfigureAwait(false);
+
+                canDeletePost = true;
+            }
+            
 
 
             var postListModel = new PostListModel
             {
                 AutorId = userId,
-                Items = postList
+                Items = postList,
+                CanDeletePost = canDeletePost
+
             };
 
             return View(postListModel);
         }
 
-        // GET: PostController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+
 
         /// <summary>
         /// create the user id.
         /// </summary>
         /// <param name="userId">the user id.</param>
         /// <returns>a Task<IActionResult> containing the user id.</returns>
+       
         public async Task<IActionResult> Create(ulong userId)
         {
+            var roleId = (ulong)HttpContext.Session.GetInt32("RoleId");
+
             var postModel = new PostEditAddModel
             {
                 AutorId = userId,
+                RoleId = roleId,
                 PostsStatusOptions = (List<PostStatusModel>)await _postService.GetPostStatus()
             };
 
@@ -75,15 +94,18 @@ namespace MyBlogApp.Web.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PostEditAddModel model)
+        public async Task<ActionResult> Create(PostEditAddModel model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _postService.CreatePost(model);
+                var roleId = (ulong)HttpContext.Session.GetInt32("RoleId");
+                return RedirectToAction(nameof(Index), new { userId = model.AutorId, roleId = model.RoleId });
             }
             catch
             {
-                return View();
+                model.PostsStatusOptions = (List<PostStatusModel>)await _postService.GetPostStatus();
+                return View(model);
             }
         }
 
@@ -107,9 +129,9 @@ namespace MyBlogApp.Web.Controllers
             try
             {
 
-                _postService.UpdatePost(model);
-
-                return RedirectToAction(nameof(Index), new { userId = model.AutorId });
+               await _postService.UpdatePost(model);
+                var roleId = (ulong)HttpContext.Session.GetInt32("RoleId");
+                return RedirectToAction(nameof(Index), new { userId = model.AutorId , roleId = model.RoleId });
             }
             catch(Exception ex)
             {
@@ -127,7 +149,7 @@ namespace MyBlogApp.Web.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index), new { userId = model.AutorId });
+                return RedirectToAction(nameof(Index), new { userId = model.AutorId, roleId = model.RoleId });
             }
             catch
             {

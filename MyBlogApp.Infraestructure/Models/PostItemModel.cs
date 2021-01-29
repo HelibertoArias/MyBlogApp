@@ -35,5 +35,7 @@
         /// Gets or sets the post status name.
         /// </summary>
         public string PostStatusName { get; set; }
+
+        public ulong RoleId { get; set; }
     }
 }

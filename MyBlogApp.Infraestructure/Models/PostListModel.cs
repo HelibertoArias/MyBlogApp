@@ -10,5 +10,9 @@ namespace MyBlogApp.Infraestructure.Models
         public IEnumerable<PostItemModel> Items { get; set; }
 
         public ulong AutorId { get; set; }
+
+
+        public ulong RoleId { get; set; }
+        public bool CanDeletePost { get; set; }
     }
 }

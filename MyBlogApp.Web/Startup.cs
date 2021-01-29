@@ -10,6 +10,7 @@ using MyBlogApp.Infraestructure;
 using MyBlogApp.Infraestructure.Mappers;
 using MyBlogApp.Infraestructure.Repositories;
 using MyBlogApp.Infraestructure.Services;
+using System;
 
 namespace MyBlogApp.Web
 {
@@ -25,6 +26,13 @@ namespace MyBlogApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(100000);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
 
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
@@ -36,7 +44,9 @@ namespace MyBlogApp.Web
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPostRespository, PostRespository>();
 
+            //services.AddDistributedMemoryCache();
 
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +62,8 @@ namespace MyBlogApp.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -65,6 +77,9 @@ namespace MyBlogApp.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+           
+
         }
     }
 }

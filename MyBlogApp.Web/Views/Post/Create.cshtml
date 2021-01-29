@@ -1,22 +1,23 @@
 ﻿@model MyBlogApp.Infraestructure.Models.PostEditAddModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>Post</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
             <input asp-for="PostId" type="hidden" />
             <input asp-for="AutorId" type="hidden" />
             <input asp-for="RoleId" type="hidden" />
+
 
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -44,9 +45,7 @@
 </div>
 
 <div>
-
-    @Html.ActionLink("Back to List", "Index", new { userId = Model.AutorId}) |
-
+    @Html.ActionLink("Back to List", "Index", new { userId = Model.AutorId }) |
 </div>
 
 @section Scripts {

@@ -1,4 +1,5 @@
-﻿using MyBlogApp.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MyBlogApp.Core.Entities;
 using MyBlogApp.Core.Respositories;
 using System;
 using System.Linq;
@@ -35,7 +36,8 @@ namespace MyBlogApp.Infraestructure.Repositories
         {
             var results = dbContext.Users
                             .Where(x => x.Username.ToLower().Equals(username.ToLower())
-                                        && x.Password.Equals(password));
+                                        && x.Password.Equals(password))
+                            .Include(x=>x.Role);
 
             return (results.Any()) ? results.First() : null;
 

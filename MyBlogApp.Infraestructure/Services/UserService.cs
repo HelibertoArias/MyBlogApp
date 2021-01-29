@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyBlogApp.Core.Entities;
 using MyBlogApp.Core.Respositories;
 using MyBlogApp.Infraestructure.Models;
 using MyBlogApp.Infraestructure.Responses;
@@ -17,6 +18,11 @@ namespace MyBlogApp.Infraestructure.Services
         private readonly IUserRepository _userRepository;
 
         /// <summary>
+        /// the mapper.
+        /// </summary>
+        private readonly IMapper _mapper;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
         /// <param name="mapper">the mapper.</param>
@@ -25,6 +31,7 @@ namespace MyBlogApp.Infraestructure.Services
                             IUserRepository userRepostory)
         {
             _userRepository = userRepostory;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -46,7 +53,7 @@ namespace MyBlogApp.Infraestructure.Services
                 return null;
             }
 
-            return new UserLoginResponse { RoleName = user.Role.Name, Id = user.UserId, Username = user.Username };
+            return _mapper.Map<User, UserLoginResponse>(user);
         }
     }
 }
